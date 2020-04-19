@@ -1,19 +1,16 @@
-import tensorflow as tf
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+import numpy as np
+import time
+a = np.random.rand(100000)
+b = np.random.rand(100000)
 
-# 实现一个加法运算
-a = tf.constant(5.0)
-b = tf.constant(6.0)
-print(a)
-print(b)
+c = 0
+start = time.time()
+for i in range(100000):
+    c += a[i]+b[i]
+end = time.time()
+print('for计算耗时%lf'%((end-start)*1000)+'ms')
 
-sum1 = tf.add(a,b)
-# 获取默认图,相当于给程序分配内存
-print(tf.get_default_graph())
-print(sum1)
-with tf.Session() as sess:
-    print(sess.run(sum1))
-    print(a.graph)
-    print(b.graph)
-    print(sess.graph)
+start = time.time()
+c = np.dot(a,b)
+end = time.time()
+print('向量化运算耗时%lf'%((end-start)*1000)+'ms')
